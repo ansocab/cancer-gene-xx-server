@@ -13,7 +13,13 @@ const {
   loginUser,
   logoutUser,
 } = require("./controllers/user");
-const {getAllUserSearchs, getUserSearchById, createUserSearch, updateUserSearch, deleteUserSearch} = require("./controllers/UserSearch")
+const {
+  getAllUserSearchs,
+  getUserSearchById,
+  createUserSearch,
+  updateUserSearch,
+  deleteUserSearch,
+} = require("./controllers/UserSearch");
 
 const app = express();
 const { PORT = 4000 } = process.env;
@@ -37,18 +43,7 @@ app.get("/", (req, res) => {
   req.session.requestCount = req.session.requestCount
     ? req.session.requestCount + 1
     : 1;
-  res.send(
-    `api-make API running, ${
-      req.session.requestCount
-    } requests made this session. 
-
-    ${listEndpoints(app)
-      .map(
-        (a) =>
-          `<a href="http://localhost:4000${a.path}" >http://localhost:4000${a.path}</a>`
-      )
-      .join("\n")}`
-  );
+  res.json(req.session);
 });
 
 app.post("/register", createUser);
@@ -56,13 +51,12 @@ app.post("/login", loginUser);
 app.get("/logout", logoutUser);
 app.get("/profile", getUser);
 
-app.route("/usersearchs")
-.get(getAllUserSearchs)
-.post(createUserSearch)
-app.route("/usersearchs/:id")
-.get(getUserSearchById)
-.put(updateUserSearch)
-.delete(deleteUserSearch);
+app.route("/usersearchs").get(getAllUserSearchs).post(createUserSearch);
+app
+  .route("/usersearchs/:id")
+  .get(getUserSearchById)
+  .put(updateUserSearch)
+  .delete(deleteUserSearch);
 
 (async () => {
   await connectDB();

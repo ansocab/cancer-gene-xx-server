@@ -22,17 +22,19 @@ exports.createUser = async (req, res, next) => {
 exports.loginUser = async (req, res, next) => {
   const { email, password } = req.body;
   User.authenticate(email, password, (err, user) => {
-    if (err)
+    if (err) {
       return res.status(403).json({
         success: false,
       });
-    req.session.userId = user._id;
-
-    res.status(200).json({
-      success: true,
-      redirectUrl: "/profile",
-      user: { name: user.name, email: user.email },
-    });
+    } else {
+      req.session.userId = user._id;
+      return res.status(200).json({
+        success: true,
+        redirectUrl: "/profile",
+        user: { name: user.name, email: user.email },
+        userID: req.session.userId,
+      });
+    }
   });
 };
 
