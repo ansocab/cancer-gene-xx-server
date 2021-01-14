@@ -14,11 +14,8 @@ const {
   logoutUser,
 } = require("./controllers/user");
 const {
-  getAllUserSearchs,
-  getUserSearchById,
+  getUserSearchByUserId,
   createUserSearch,
-  updateUserSearch,
-  deleteUserSearch,
 } = require("./controllers/UserSearch");
 
 const app = express();
@@ -51,12 +48,8 @@ app.post("/login", loginUser);
 app.get("/logout", logoutUser);
 app.get("/profile", getUser);
 
-app.route("/usersearchs").get(getAllUserSearchs).post(createUserSearch);
-app
-  .route("/usersearchs/:id")
-  .get(getUserSearchById)
-  .put(updateUserSearch)
-  .delete(deleteUserSearch);
+app.post("/usersearchs", createUserSearch);
+app.get("/usersearchs/:userId", getUserSearchByUserId);
 
 (async () => {
   await connectDB();
