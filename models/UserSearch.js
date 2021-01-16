@@ -8,6 +8,7 @@ const UserSearchSchema = new mongoose.Schema(
     category: [String],
     data_type: [String],
     workflow: [String],
+    pinned: Boolean,
     user_id: String,
   },
   { timestamps: true }

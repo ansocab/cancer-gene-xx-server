@@ -14,6 +14,20 @@ exports.getUserSearchByUserId = async function (req, res) {
   res.json(userSearches);
 };
 
+exports.updateUserSearch = async (req, res) => {
+  const { searchId } = req.params;
+  const result = await UserSearch.findByIdAndUpdate(searchId, req.body, {
+    new: true,
+  });
+  res.json({ success: true, result });
+};
+
+exports.deleteUserSearch = async (req, res) => {
+  const { searchId } = req.params;
+  const result = await UserSearch.findByIdAndRemove({ _id: searchId });
+  res.status(204).send(`deleted user search with id ${searchId}`);
+};
+
 /* exports.getAllUserSearchs = async function (req, res) {
   const all = await UserSearch.find().limit(10);
   res.json(all);
@@ -28,18 +42,4 @@ exports.getUserSearchById = async function (req, res) {
   res.json(single);
 };
 
-exports.updateUserSearch = async (req, res) => {
-  const { title, body, img } = req.body;
-  const { id } = req.params;
-  const result = await UserSearch.findByIdAndUpdate(id, req.body, {
-    new: true,
-  });
-  res.json({ success: true, result });
-};
-
-exports.deleteUserSearch = async (req, res) => {
-  const { id } = req.params;
-  const result = await UserSearch.findByIdAndDelete();
-  res.sendStatus("204");
-};
 */

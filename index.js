@@ -16,6 +16,8 @@ const {
 const {
   getUserSearchByUserId,
   createUserSearch,
+  updateUserSearch,
+  deleteUserSearch,
 } = require("./controllers/UserSearch");
 
 const app = express();
@@ -49,7 +51,9 @@ app.get("/logout", logoutUser);
 app.get("/profile", getUser);
 
 app.post("/usersearchs", createUserSearch);
+app.put("/usersearchs/:searchId", updateUserSearch);
 app.get("/usersearchs/:userId", getUserSearchByUserId);
+app.delete("/usersearchs/:searchId", deleteUserSearch);
 
 (async () => {
   await connectDB();
