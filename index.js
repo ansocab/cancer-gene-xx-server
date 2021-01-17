@@ -5,7 +5,8 @@ const session = require("express-session");
 const cors = require("cors");
 const listEndpoints = require("express-list-endpoints");
 const colors = require("colors/safe");
-const { connectDB } = require("./models");
+const { connectDB, connection } = require("./models");
+const MongoStore = require("connect-mongo")(session);
 
 const {
   createUser,
@@ -38,6 +39,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: connection }),
   })
 );
 
