@@ -10,6 +10,7 @@ const UserSearchSchema = new mongoose.Schema(
     workflow: [String],
     pinned: Boolean,
     user_id: String,
+    cancer_data_id: String,
   },
   { timestamps: true }
 );

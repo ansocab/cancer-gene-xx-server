@@ -5,6 +5,15 @@ exports.createUserSearch = async function (req, res) {
   res.json({ success: true, newUserSearch });
 };
 
+exports.getUserSearchById = async function (req, res) {
+  const { searchId } = req.params;
+  const single = await UserSearch.findOne({ _id: searchId });
+  if (!single) {
+    return res.status(404).send("UserSearch with this ID does not exist");
+  }
+  res.json(single);
+};
+
 exports.getUserSearchByUserId = async function (req, res) {
   const { userId } = req.params;
   const userSearches = await UserSearch.find({ user_id: userId });
@@ -32,14 +41,4 @@ exports.deleteUserSearch = async (req, res) => {
   const all = await UserSearch.find().limit(10);
   res.json(all);
 };
-
-exports.getUserSearchById = async function (req, res) {
-  const { id } = req.params;
-  const single = await UserSearch.findOne({ id: Number(id) });
-  if (!single) {
-    return res.status(404).send("UserSearch with this ID does not exist");
-  }
-  res.json(single);
-};
-
 */

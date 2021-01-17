@@ -14,11 +14,18 @@ const {
   logoutUser,
 } = require("./controllers/user");
 const {
+  getUserSearchById,
   getUserSearchByUserId,
   createUserSearch,
   updateUserSearch,
   deleteUserSearch,
 } = require("./controllers/UserSearch");
+
+const {
+  createCancerData,
+  getCancerDataById,
+  deleteCancerData,
+} = require("./controllers/CancerData");
 
 const app = express();
 const { PORT = 4000 } = process.env;
@@ -50,11 +57,16 @@ app.post("/login", loginUser);
 app.get("/logout", logoutUser);
 app.get("/profile", getUser);
 
+app.get("/user/usersearchs/:userId", getUserSearchByUserId);
+
 app.post("/usersearchs", createUserSearch);
+app.get("/usersearchs/:searchId", getUserSearchById);
 app.put("/usersearchs/:searchId", updateUserSearch);
-app.get("/usersearchs/:userId", getUserSearchByUserId);
 app.delete("/usersearchs/:searchId", deleteUserSearch);
 
+app.post("/cancerdata", createCancerData);
+app.get("/cancerdata/:cancerDataId", getCancerDataById);
+app.delete("/cancerdata/:cancerDataId", deleteCancerData);
 (async () => {
   await connectDB();
   app.listen(PORT, () =>
