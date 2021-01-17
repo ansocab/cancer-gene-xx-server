@@ -2,14 +2,18 @@ const mongoose = require('mongoose')
 
 const CancerDataSchema = new mongoose.Schema(
 	{
-		search_name: String,
-		ensg_number: String,
-		project: [String],
-		category: [String],
-		data_type: [String],
-		workflow: [String],
-		pinned: Boolean,
-		user_id: String,
+		data: [
+			{
+				file_id: String,
+				gene_value: Number,
+				case_id: String,
+				days_to_death: Number,
+				gender: String,
+				vital_status: String,
+				tumor_grade: String,
+				tumor_stage: String,
+			},
+		],
 	},
 	{ timestamps: true }
 )
