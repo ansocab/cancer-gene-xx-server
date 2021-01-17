@@ -1,74 +1,77 @@
-require('dotenv').config()
-const express = require('express')
-const cookieParser = require('cookie-parser')
-const session = require('express-session')
-const cors = require('cors')
-const listEndpoints = require('express-list-endpoints')
-const colors = require('colors/safe')
-const { connectDB } = require('./models')
+require("dotenv").config();
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const cors = require("cors");
+const listEndpoints = require("express-list-endpoints");
+const colors = require("colors/safe");
+const { connectDB } = require("./models");
 
 const {
-	createUser,
-	getUser,
-	loginUser,
-	logoutUser,
-} = require('./controllers/user')
+  createUser,
+  getUser,
+  loginUser,
+  logoutUser,
+} = require("./controllers/user");
 const {
-	getUserSearchByUserId,
-	createUserSearch,
-	updateUserSearch,
-	deleteUserSearch,
-} = require('./controllers/UserSearch')
+  getUserSearchById,
+  getUserSearchByUserId,
+  createUserSearch,
+  updateUserSearch,
+  deleteUserSearch,
+} = require("./controllers/UserSearch");
 
 const {
-	createCancerData,
-	getCancerDataById,
-	deleteCancerData,
-} = require('./controllers/CancerData')
+  createCancerData,
+  getCancerDataById,
+  deleteCancerData,
+} = require("./controllers/CancerData");
 
-const app = express()
-const { PORT = 4000 } = process.env
+const app = express();
+const { PORT = 4000 } = process.env;
 
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
-app.use(express.json())
-app.use(cookieParser())
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(express.json());
+app.use(cookieParser());
 app.use(
-	session({
-		secret: process.env.SESSION_SECRET,
-		resave: false,
-		saveUninitialized: true,
-	})
-)
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 app.use((err, req, res, next) => {
-	res.status(err.status).send(err)
-})
+  res.status(err.status).send(err);
+});
 
-app.get('/', (req, res) => {
-	req.session.requestCount = req.session.requestCount
-		? req.session.requestCount + 1
-		: 1
-	res.json(req.session)
-})
+app.get("/", (req, res) => {
+  req.session.requestCount = req.session.requestCount
+    ? req.session.requestCount + 1
+    : 1;
+  res.json(req.session);
+});
 
-app.post('/register', createUser)
-app.post('/login', loginUser)
-app.get('/logout', logoutUser)
-app.get('/profile', getUser)
+app.post("/register", createUser);
+app.post("/login", loginUser);
+app.get("/logout", logoutUser);
+app.get("/profile", getUser);
 
-app.post('/usersearchs', createUserSearch)
-app.put('/usersearchs/:searchId', updateUserSearch)
-app.get('/usersearchs/:userId', getUserSearchByUserId)
-app.delete('/usersearchs/:searchId', deleteUserSearch)
+app.get("/user/usersearchs/:userId", getUserSearchByUserId);
 
-app.post('/cancerdata', createCancerData)
-app.get('/cancerdata/:cancerDataId', getCancerDataById)
-app.delete('/cancerdata/:cancerDataId', deleteCancerData)
-;(async () => {
-	await connectDB()
-	app.listen(PORT, () =>
-		console.log(
-			colors.green.inverse(`api-make API running at http://localhost:${PORT}`)
-		)
-	)
-})()
+app.post("/usersearchs", createUserSearch);
+app.get("/usersearchs/:searchId", getUserSearchById);
+app.put("/usersearchs/:searchId", updateUserSearch);
+app.delete("/usersearchs/:searchId", deleteUserSearch);
+
+app.post("/cancerdata", createCancerData);
+app.get("/cancerdata/:cancerDataId", getCancerDataById);
+app.delete("/cancerdata/:cancerDataId", deleteCancerData);
+(async () => {
+  await connectDB();
+  app.listen(PORT, () =>
+    console.log(
+      colors.green.inverse(`api-make API running at http://localhost:${PORT}`)
+    )
+  );
+})();
