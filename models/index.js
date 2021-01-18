@@ -8,10 +8,7 @@ const connectDB = () => {
   return mongoose.connect(process.env.CONNECTION_URI);
 };
 
-const connection = mongoose.connection;
-
 exports.connectDB = connectDB;
 exports.User = User;
 exports.CancerData = CancerData;
 exports.UserSearch = UserSearch;
-exports.connection = connection;

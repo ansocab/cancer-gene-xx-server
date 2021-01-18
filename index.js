@@ -6,7 +6,6 @@ const cors = require("cors");
 const listEndpoints = require("express-list-endpoints");
 const colors = require("colors/safe");
 const { connectDB, connection } = require("./models");
-const MongoStore = require("connect-mongo")(session);
 
 const {
   createUser,
@@ -39,7 +38,6 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: connection }),
   })
 );
 
@@ -59,7 +57,7 @@ app.post("/login", loginUser);
 app.get("/logout", logoutUser);
 app.get("/profile", getUser);
 
-app.get("/user/usersearchs/:userId", getUserSearchByUserId);
+app.get("/user/usersearchs", getUserSearchByUserId);
 
 app.post("/usersearchs", createUserSearch);
 app.get("/usersearchs/:searchId", getUserSearchById);
