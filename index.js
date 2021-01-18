@@ -41,6 +41,12 @@ app.use(
   })
 );
 
+app.use((req, res, next) => {
+  console.log(req.session);
+  console.log(req.sessionID);
+  next();
+});
+
 app.use((err, req, res, next) => {
   res.status(err.status).send(err);
 });
