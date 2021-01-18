@@ -35,7 +35,9 @@ const origin =
     ? process.env.PRODUCTION_CLIENT
     : process.env.DEVELOPMENT_CLIENT;
 
-app.use(cors({ credentials: true, origin }));
+//app.use(cors({ credentials: true, origin }));
+app.use(cors());
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(
