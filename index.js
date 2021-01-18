@@ -30,7 +30,12 @@ const {
 const app = express();
 const { PORT = 4000 } = process.env;
 
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+const origin =
+  process.env.NODE_ENV === "production"
+    ? process.env.PRODUCTION_CLIENT
+    : process.env.DEVELOPMENT_CLIENT;
+
+app.use(cors({ credentials: true, origin }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(
