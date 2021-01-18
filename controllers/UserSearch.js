@@ -15,12 +15,18 @@ exports.getUserSearchById = async function (req, res) {
 };
 
 exports.getUserSearchByUserId = async function (req, res) {
-  const { userId } = req.params;
-  const userSearches = await UserSearch.find({ user_id: userId });
-  if (!userSearches) {
-    return res.status(404).send("User doesn't have any searches yet");
+  if (req.session.userId) {
+    const userSearches = await UserSearch.find({ user_id: req.session.userId });
+    if (!userSearches) {
+      return res.status(204).send("User doesn't have any searches yet");
+    }
+    res.json(userSearches);
+  } else {
+    return res.status(403).json({
+      success: false,
+      redirectUrl: "/",
+    });
   }
-  res.json(userSearches);
 };
 
 exports.updateUserSearch = async (req, res) => {

@@ -63,7 +63,7 @@ exports.getUser = async (req, res, next) => {
     console.log(user, req.session.userId);
     return res.status(200).json({
       success: true,
-      user: { name: user.name, email: user.email },
+      user: { name: user.name, email: user.email, user_id: user._id },
     });
   } else {
     return res.status(403).json({
