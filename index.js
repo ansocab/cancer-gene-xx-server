@@ -35,7 +35,17 @@ const origin =
     ? process.env.PRODUCTION_CLIENT
     : process.env.DEVELOPMENT_CLIENT;
 
-app.set('trust proxy', true)
+const cookie =
+  process.env.NODE_ENV === "production"
+    ? {
+        httpOnly: true,
+        secure: true,
+        maxAge: 1000 * 60 * 60 * 48,
+        sameSite: "none",
+      }
+    : {};
+
+app.set("trust proxy", true);
 
 app.use(cors({ credentials: true, origin }));
 app.use(express.json());
@@ -45,7 +55,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
-    cookie: { httpOnly: true, secure: true, maxAge: 1000 * 60 * 60 * 48, sameSite: 'none' }
+    cookie: cookie,
   })
 );
 

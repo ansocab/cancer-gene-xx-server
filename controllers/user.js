@@ -13,7 +13,7 @@ exports.createUser = async (req, res, next) => {
       return res.status(200).json({
         success: true,
         redirectUrl: "/profile",
-        user: { name: user.name, email: user.email },
+        user: { name: user.name, email: user.email, user_id: user._id },
       });
     }
   });
@@ -31,8 +31,7 @@ exports.loginUser = async (req, res, next) => {
       return res.status(200).json({
         success: true,
         redirectUrl: "/profile",
-        user: { name: user.name, email: user.email },
-        userID: req.session.userId,
+        user: { name: user.name, email: user.email, user_id: user._id },
       });
     }
   });
