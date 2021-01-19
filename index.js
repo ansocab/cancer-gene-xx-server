@@ -45,10 +45,10 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: {sameSite: "none",
-            ...(process.env.NODE_ENV !== 'dev'
-        ? { domain: '.netlify.app' }
-        : {})},
+    //cookie: {sameSite: "none",
+    //        ...(process.env.NODE_ENV !== 'dev'
+    //    ? { domain: '.netlify.app' }
+    //    : {})},
     
   })
 );
