@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
-//const session = require("express-session");
+const session = require("express-session");
 const cors = require("cors");
 const listEndpoints = require("express-list-endpoints");
 const colors = require("colors/safe");
@@ -41,21 +41,13 @@ app.use(cors({ credentials: true, origin }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(
-  require("express-session")({
+  session({
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
     cookie: { httpOnly: true, secure: true, maxAge: 1000 * 60 * 60 * 48, sameSite: 'none' }
-    
-    //cookie: {sameSite: "none",
-    //        ...(process.env.NODE_ENV !== 'dev'
-    //    ? { domain: '.netlify.app' }
-    //    : {})},
-    
   })
 );
-
-console.log("x1")
 
 app.use((req, res, next) => {
   console.log(req.session);
