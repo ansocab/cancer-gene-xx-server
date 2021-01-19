@@ -45,6 +45,8 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
+    cookie: { httpOnly: true, secure: true, maxAge: 1000 * 60 * 60 * 48, sameSite: 'none' }
+    
     //cookie: {sameSite: "none",
     //        ...(process.env.NODE_ENV !== 'dev'
     //    ? { domain: '.netlify.app' }
