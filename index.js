@@ -43,7 +43,7 @@ app.use(cookieParser());
 app.use(
   require("express-session")({
     secret: process.env.SESSION_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     //cookie: {sameSite: "none",
     //        ...(process.env.NODE_ENV !== 'dev'
