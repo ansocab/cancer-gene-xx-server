@@ -53,7 +53,7 @@ app.use(
   })
 );
 
-console.log("x1"
+console.log("x1")
 
 app.use((req, res, next) => {
   console.log(req.session);
