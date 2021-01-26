@@ -38,7 +38,7 @@ const origin =
 const cookie =
   process.env.NODE_ENV === "production"
     ? {
-       // httpOnly: true,
+        httpOnly: true,
         secure: true,
         maxAge: 1000 * 60 * 60 * 48,
         sameSite: "none",
