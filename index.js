@@ -39,6 +39,7 @@ const cookie =
   process.env.NODE_ENV === "production"
     ? {
         httpOnly: true,
+      domain: netlify.app,
         secure: true,
         maxAge: 1000 * 60 * 60 * 48,
         sameSite: "none",
